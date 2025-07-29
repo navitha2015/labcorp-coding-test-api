@@ -200,6 +200,15 @@ public class OrderPayload {
             this.estimatedDelivery = "2024-11-15";
         }
 
+        @Override
+        public String toString() {
+            return "Shipping{" +
+                    "method='" + method + '\'' +
+                    ", cost=" + cost +
+                    ", estimatedDelivery='" + estimatedDelivery + '\'' +
+                    '}';
+        }
+
         // Getters and Setters
         public String getMethod() { return method; }
         public void setMethod(String method) { this.method = method; }
@@ -209,5 +218,19 @@ public class OrderPayload {
 
         public String getEstimatedDelivery() { return estimatedDelivery; }
         public void setEstimatedDelivery(String estimatedDelivery) { this.estimatedDelivery = estimatedDelivery; }
+    }
+
+
+    @Override
+    public String toString() {
+        return "OrderPayload{" +
+                "orderId='" + orderId + '\'' +
+                ", customer=" + customer +
+                ", items=" + items +
+                ", payment=" + payment +
+                ", shipping=" + shipping +
+                ", orderStatus='" + orderStatus + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                '}';
     }
 }

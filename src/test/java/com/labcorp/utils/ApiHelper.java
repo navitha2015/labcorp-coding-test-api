@@ -4,14 +4,17 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ApiHelper {
 
+    @Setter
     private String baseUrl;
     private Map<String, String> queryParams;
+    @Setter
     private String requestBody;
     private RequestSpecification requestSpec;
 
@@ -27,21 +30,13 @@ public class ApiHelper {
                 .log().all();
     }
 
-    public void setBaseUrl(String baseUrl) {
-        this.baseUrl = baseUrl;
-        RestAssured.baseURI = baseUrl;
-    }
-
     public void addQueryParameter(String key, String value) {
         this.queryParams.put(key, value);
     }
 
-    public void setRequestBody(String body) {
-        this.requestBody = body;
-    }
-
     public Response sendGetRequest(String endpoint) {
         RequestSpecification request = requestSpec;
+        request.baseUri(baseUrl);
 
         if (!queryParams.isEmpty()) {
             request = request.queryParams(queryParams);
@@ -57,6 +52,7 @@ public class ApiHelper {
 
     public Response sendPostRequest(String endpoint) {
         RequestSpecification request = requestSpec;
+        request.baseUri(baseUrl);
 
         if (!queryParams.isEmpty()) {
             request = request.queryParams(queryParams);

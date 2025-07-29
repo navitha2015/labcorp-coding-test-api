@@ -1,11 +1,16 @@
 package com.labcorp.steps;
 
+import com.labcorp.models.OrderPayload;
 import com.labcorp.utils.ApiHelper;
 import com.labcorp.utils.TestContext;
-import com.labcorp.models.OrderPayload;
 import io.cucumber.java.en.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static org.hamcrest.Matchers.*;
 
@@ -170,5 +175,12 @@ public class ApiStepDefinitions {
     public void validateTotalAmount(double expectedAmount) {
         response.then()
                 .body("parsedBody.payment.amount", equalTo((float) expectedAmount));
+    }
+
+    @Given("I load request body from {string}")
+    public void loadRequestBodyFrom(String fileName) throws IOException {
+        String filePath = "src/test/resources/data/" + fileName;
+        String jsonBody = new String(Files.readAllBytes(Paths.get(filePath)), StandardCharsets.UTF_8);
+        apiHelper.setRequestBody(jsonBody);
     }
 }

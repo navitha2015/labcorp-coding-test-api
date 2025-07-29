@@ -21,51 +21,7 @@ Feature: API Testing with Beeceptor
   Scenario: Validate POST request with order data
     Given I have a POST endpoint "/sample-request"
     And I add query parameter "author" with value "beeceptor"
-    And I have the following order payload:
-      """
-      {
-        "order_id": "12345",
-        "customer": {
-          "name": "Jane Smith",
-          "email": "janesmith@example.com",
-          "phone": "1-987-654-3210",
-          "address": {
-            "street": "456 Oak Street",
-            "city": "Metropolis",
-            "state": "NY",
-            "zipcode": "10001",
-            "country": "USA"
-          }
-        },
-        "items": [
-          {
-            "product_id": "A101",
-            "name": "Wireless Headphones",
-            "quantity": 1,
-            "price": 79.99
-          },
-          {
-            "product_id": "B202",
-            "name": "Smartphone Case",
-            "quantity": 2,
-            "price": 15.99
-          }
-        ],
-        "payment": {
-          "method": "credit_card",
-          "transaction_id": "txn_67890",
-          "amount": 111.97,
-          "currency": "USD"
-        },
-        "shipping": {
-          "method": "standard",
-          "cost": 5.99,
-          "estimated_delivery": "2024-11-15"
-        },
-        "order_status": "processing",
-        "created_at": "2024-11-07T12:00:00Z"
-      }
-      """
+    And I load request body from "order.json"
     When I send a POST request
     Then the response status code should be 200
     And the customer information should be validated
